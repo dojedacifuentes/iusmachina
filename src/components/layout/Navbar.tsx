@@ -1,24 +1,23 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Zap } from 'lucide-react';
 
 const navItems = [
-  { href: '#evaluacion', label: 'Evaluación IA' },
-  { href: '#soluciones', label: 'Soluciones' },
-  { href: '#simulador', label: 'Simulador' },
-  { href: '#portafolio', label: 'Proyectos' },
-  { href: '#metodo', label: 'Método' },
-  { href: '#contacto', label: 'Contacto' },
+  { href: '/', label: 'Inicio', type: 'route' },
+  { href: '#evaluacion', label: 'Evaluación IA', type: 'anchor' },
+  { href: '#soluciones', label: 'Soluciones', type: 'anchor' },
+  { href: '#portafolio', label: 'Proyectos', type: 'anchor' },
+  { href: '/capacitacion', label: 'Capacitación', type: 'route' },
+  { href: '#contacto', label: 'Contacto', type: 'anchor' },
 ];
-
-function scrollTo(id: string) {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -32,9 +31,30 @@ export function Navbar() {
     return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
 
-  const handleNav = (href: string) => {
+  const handleNav = (href: string, type: string) => {
     setMenuOpen(false);
-    scrollTo(href.replace('#', ''));
+    if (type === 'route') {
+      router.push(href);
+    } else {
+      // Anchor link
+      const id = href.replace('#', '');
+      if (pathname === '/') {
+        // On home page: smooth scroll
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        // On other pages: navigate to home with hash
+        router.push('/' + href);
+      }
+    }
+  };
+
+  const handleEvalCTA = () => {
+    setMenuOpen(false);
+    if (pathname === '/') {
+      document.getElementById('evaluacion')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      router.push('/#evaluacion');
+    }
   };
 
   return (
@@ -50,7 +70,7 @@ export function Navbar() {
 
           {/* Logo */}
           <button
-            onClick={() => scrollTo('hero')}
+            onClick={() => handleNav('/', 'route')}
             className="flex items-center gap-2.5 shrink-0 group"
           >
             <div className="w-7 h-7 rounded-lg bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center group-hover:bg-cyan-500/30 transition-colors">
@@ -64,15 +84,23 @@ export function Navbar() {
 
           {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-0.5">
-            {navItems.map(({ href, label }) => (
-              <button
-                key={href}
-                onClick={() => handleNav(href)}
-                className="px-3 py-1.5 text-[13px] text-zinc-400 hover:text-zinc-200 rounded-lg hover:bg-white/[0.04] transition-all"
-              >
-                {label}
-              </button>
-            ))}
+            {navItems.map(({ href, label, type }) => {
+              const isActive =
+                type === 'route' && pathname === href;
+              return (
+                <button
+                  key={href}
+                  onClick={() => handleNav(href, type)}
+                  className={`px-3 py-1.5 text-[13px] rounded-lg transition-all ${
+                    isActive
+                      ? 'text-cyan-400 bg-cyan-500/8'
+                      : 'text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04]'
+                  }`}
+                >
+                  {label}
+                </button>
+              );
+            })}
           </nav>
 
           {/* CTA */}
@@ -80,7 +108,7 @@ export function Navbar() {
             <motion.button
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              onClick={() => handleNav('#evaluacion')}
+              onClick={handleEvalCTA}
               className="hidden md:flex items-center gap-1.5 px-4 py-1.5 rounded-lg border border-cyan-500/35 bg-cyan-500/10 text-cyan-300 text-xs font-bold hover:bg-cyan-500/18 transition-all"
             >
               <Zap className="w-3.5 h-3.5" />
@@ -117,18 +145,25 @@ export function Navbar() {
               className="fixed inset-x-0 top-14 z-50 lg:hidden border-b border-white/[0.07] bg-[oklch(0.07_0.015_250/0.98)] backdrop-blur-xl"
             >
               <div className="max-w-7xl mx-auto px-4 py-3 space-y-0.5">
-                {navItems.map(({ href, label }) => (
-                  <button
-                    key={href}
-                    onClick={() => handleNav(href)}
-                    className="w-full text-left px-3 py-2.5 text-sm text-zinc-400 hover:text-zinc-200 rounded-lg hover:bg-white/[0.04] transition-all"
-                  >
-                    {label}
-                  </button>
-                ))}
+                {navItems.map(({ href, label, type }) => {
+                  const isActive = type === 'route' && pathname === href;
+                  return (
+                    <button
+                      key={href}
+                      onClick={() => handleNav(href, type)}
+                      className={`w-full text-left px-3 py-2.5 text-sm rounded-lg transition-all ${
+                        isActive
+                          ? 'text-cyan-400 bg-cyan-500/8'
+                          : 'text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04]'
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
                 <div className="pt-2 pb-1">
                   <button
-                    onClick={() => handleNav('#evaluacion')}
+                    onClick={handleEvalCTA}
                     className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-cyan-500/35 bg-cyan-500/10 text-cyan-300 text-sm font-bold hover:bg-cyan-500/18 transition-all"
                   >
                     <Zap className="w-4 h-4" />
