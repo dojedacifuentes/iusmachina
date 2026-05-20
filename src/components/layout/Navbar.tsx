@@ -4,13 +4,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Zap } from 'lucide-react';
 
 const navItems = [
-  { href: '#iusmachina', label: 'IusMachina' },
-  { href: '#prompt-lab', label: 'Prompt Lab' },
-  { href: '#toolkit', label: 'Toolkit' },
-  { href: '#nosotros', label: 'Nosotros' },
-  { href: '#servicios', label: 'Servicios' },
-  { href: '#portafolio', label: 'Portafolio' },
-  { href: '#talleres', label: 'Talleres' },
+  { href: '#evaluacion', label: 'Evaluación IA' },
+  { href: '#soluciones', label: 'Soluciones' },
+  { href: '#simulador', label: 'Simulador' },
+  { href: '#portafolio', label: 'Proyectos' },
+  { href: '#metodo', label: 'Método' },
   { href: '#contacto', label: 'Contacto' },
 ];
 
@@ -44,7 +42,7 @@ export function Navbar() {
       <header
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'backdrop-blur-xl bg-[oklch(0.07_0.015_250/0.92)] border-b border-white/[0.07]'
+            ? 'backdrop-blur-xl bg-[oklch(0.07_0.015_250/0.94)] border-b border-white/[0.07]'
             : 'bg-transparent'
         }`}
       >
@@ -77,14 +75,17 @@ export function Navbar() {
             ))}
           </nav>
 
-          {/* Right actions */}
+          {/* CTA */}
           <div className="flex items-center gap-2">
-            <button
-              onClick={() => handleNav('#contacto')}
-              className="hidden md:flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-cyan-500/30 bg-cyan-500/8 text-cyan-300 text-xs font-semibold hover:bg-cyan-500/15 transition-all"
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => handleNav('#evaluacion')}
+              className="hidden md:flex items-center gap-1.5 px-4 py-1.5 rounded-lg border border-cyan-500/35 bg-cyan-500/10 text-cyan-300 text-xs font-bold hover:bg-cyan-500/18 transition-all"
             >
-              Solicitar diagnóstico
-            </button>
+              <Zap className="w-3.5 h-3.5" />
+              Evaluar mi compatibilidad IA
+            </motion.button>
             <button
               onClick={() => setMenuOpen(v => !v)}
               className="lg:hidden w-8 h-8 flex items-center justify-center text-zinc-400 hover:text-zinc-200 rounded-lg hover:bg-white/[0.06] transition-colors"
@@ -127,10 +128,11 @@ export function Navbar() {
                 ))}
                 <div className="pt-2 pb-1">
                   <button
-                    onClick={() => handleNav('#contacto')}
-                    className="w-full px-4 py-2.5 rounded-xl border border-cyan-500/30 bg-cyan-500/10 text-cyan-300 text-sm font-semibold hover:bg-cyan-500/20 transition-all"
+                    onClick={() => handleNav('#evaluacion')}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-cyan-500/35 bg-cyan-500/10 text-cyan-300 text-sm font-bold hover:bg-cyan-500/18 transition-all"
                   >
-                    Solicitar diagnóstico
+                    <Zap className="w-4 h-4" />
+                    Evaluar mi compatibilidad IA
                   </button>
                 </div>
               </div>

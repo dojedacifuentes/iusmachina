@@ -5,6 +5,7 @@ import { GridBackground } from '@/components/common/GridBackground';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { FloatingContact } from '@/components/common/FloatingContact';
+import { ClientProviders } from '@/components/common/ClientProviders';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -41,12 +42,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <body className="min-h-full bg-[oklch(0.07_0.015_250)] text-zinc-200 overflow-x-hidden">
         <GridBackground />
-        <div className="relative z-10">
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-          <FloatingContact />
-        </div>
+        <ClientProviders>
+          <div className="relative z-10">
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+            <FloatingContact />
+          </div>
+        </ClientProviders>
       </body>
     </html>
   );

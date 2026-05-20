@@ -1,34 +1,32 @@
 import { HeroSection } from '@/components/sections/HeroSection';
+import { AIEvaluationSection } from '@/components/sections/AIEvaluationSection';
+import { ProblemSection } from '@/components/sections/ProblemSection';
+import { SolutionsSection } from '@/components/sections/SolutionsSection';
+import { SavingsSimulator } from '@/components/sections/SavingsSimulator';
 import { IusMachinaSection } from '@/components/sections/IusMachinaSection';
 import { PromptLabSection } from '@/components/sections/PromptLabSection';
-import { ToolkitSection } from '@/components/sections/ToolkitSection';
-import { WhatWeDoSection } from '@/components/sections/WhatWeDoSection';
-import { AboutSection } from '@/components/sections/AboutSection';
 import { PortfolioSection } from '@/components/sections/PortfolioSection';
-import { ServicesSection } from '@/components/sections/ServicesSection';
-import { SectorsSection } from '@/components/sections/SectorsSection';
-import { DemoLabSection } from '@/components/sections/DemoLabSection';
-import { WorkshopsSection } from '@/components/sections/WorkshopsSection';
 import { MethodSection } from '@/components/sections/MethodSection';
+import { AboutSection } from '@/components/sections/AboutSection';
 import { CybersecuritySection } from '@/components/sections/CybersecuritySection';
+import { WorkshopsSection } from '@/components/sections/WorkshopsSection';
 import { ContactSection } from '@/components/sections/ContactSection';
 
 export default function Home() {
   return (
     <>
       <HeroSection />
+      <AIEvaluationSection />
+      <ProblemSection />
+      <SolutionsSection />
+      <SavingsSimulator />
       <IusMachinaSection />
       <PromptLabSection />
-      <ToolkitSection />
-      <WhatWeDoSection />
-      <AboutSection />
       <PortfolioSection />
-      <ServicesSection />
-      <SectorsSection />
-      <DemoLabSection />
-      <WorkshopsSection />
       <MethodSection />
+      <AboutSection />
       <CybersecuritySection />
+      <WorkshopsSection />
       <ContactSection />
     </>
   );
